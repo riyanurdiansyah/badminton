@@ -3,10 +3,12 @@ import 'package:badminton/styles/app_style_text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MatchPage extends StatelessWidget {
-  MatchPage({Key? key, this.partai}) : super(key: key);
+  MatchPage({Key? key, this.sistem, this.partai}) : super(key: key);
 
+  final int? sistem;
   final int? partai;
 
   final matchC = Get.put(MatchController());
@@ -26,10 +28,13 @@ class MatchPage extends StatelessWidget {
                 height: 25,
               ),
               Text(
-                'Partai Ganda \nSistem Pindah Bola',
+                sistem == 2
+                    ? 'Partai Ganda \nSistem Pindah Bola'
+                    : 'Partai Ganda \nSistem Reli Point',
                 style: AppStyleText.styleMonsterat(
                   fontSize: 18,
                   color: Colors.white,
+                  height: 1.2,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -49,6 +54,9 @@ class MatchPage extends StatelessWidget {
                                 vertical: 6, horizontal: 10),
                             color: Colors.white,
                             child: Column(children: [
+                              const SizedBox(
+                                height: 8,
+                              ),
                               Text(
                                 matchC.boardName1.value,
                                 style: AppStyleText.styleMonsterat(
@@ -57,16 +65,21 @@ class MatchPage extends StatelessWidget {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
+                              if (partai == 2)
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                              if (partai == 2)
+                                Text(
+                                  matchC.boardName2.value,
+                                  style: AppStyleText.styleMonsterat(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                               const SizedBox(
                                 height: 8,
-                              ),
-                              Text(
-                                matchC.boardName2.value,
-                                style: AppStyleText.styleMonsterat(
-                                  fontSize: 12,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                ),
                               ),
                             ]),
                           ),
@@ -94,6 +107,9 @@ class MatchPage extends StatelessWidget {
                             child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
                                   Text(
                                     matchC.boardName3.value,
                                     style: AppStyleText.styleMonsterat(
@@ -102,16 +118,21 @@ class MatchPage extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
+                                  if (partai == 2)
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
+                                  if (partai == 2)
+                                    Text(
+                                      matchC.boardName4.value,
+                                      style: AppStyleText.styleMonsterat(
+                                        fontSize: 12,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                   const SizedBox(
                                     height: 8,
-                                  ),
-                                  Text(
-                                    matchC.boardName4.value,
-                                    style: AppStyleText.styleMonsterat(
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                    ),
                                   ),
                                 ]),
                           ),
@@ -350,10 +371,26 @@ class MatchPage extends StatelessWidget {
                             width: Get.width,
                             height: 200,
                             color: Colors.amber,
-                            child: const Icon(
-                              Icons.camera_rounded,
-                              size: 125,
+                            child: YoutubePlayer(
+                              onEnded: ((metaData) {}),
+                              onReady: () {
+                                const SizedBox();
+                              },
+                              topActions: [
+                                Container(
+                                  color: Colors.red,
+                                  height: 50,
+                                )
+                              ],
+                              controller: matchC.youtubePlayerController!,
+                              liveUIColor: Colors.amber,
+                              showVideoProgressIndicator: false,
+                              thumbnail: null,
+                              bufferIndicator: null,
                             ),
+                            // BetterPlayer(
+                            //   controller: matchC.betterPlayerController!,
+                            // ),
                           ),
                         ],
                       ),
@@ -364,51 +401,52 @@ class MatchPage extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              Obx(
-                () => Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    InkWell(
-                      onTap: () => matchC.fnChangePerson(),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            matchC.person.value > 1
-                                ? 'assets/on.png'
-                                : 'assets/off.png',
-                            width: 35,
-                          ),
-                          Image.asset(
-                            matchC.person.value > 0
-                                ? 'assets/on.png'
-                                : 'assets/off.png',
-                            width: 35,
-                          ),
-                        ],
+              if (partai == 2 && sistem == 2)
+                Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        onTap: () => matchC.fnChangePerson(),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              matchC.person.value > 1
+                                  ? 'assets/on.png'
+                                  : 'assets/off.png',
+                              width: 35,
+                            ),
+                            Image.asset(
+                              matchC.person.value > 0
+                                  ? 'assets/on.png'
+                                  : 'assets/off.png',
+                              width: 35,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () => matchC.fnChangePersonAway(),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            matchC.personAway.value > 0
-                                ? 'assets/on.png'
-                                : 'assets/off.png',
-                            width: 35,
-                          ),
-                          Image.asset(
-                            matchC.personAway.value > 1
-                                ? 'assets/on.png'
-                                : 'assets/off.png',
-                            width: 35,
-                          ),
-                        ],
+                      InkWell(
+                        onTap: () => matchC.fnChangePersonAway(),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              matchC.personAway.value > 0
+                                  ? 'assets/on.png'
+                                  : 'assets/off.png',
+                              width: 35,
+                            ),
+                            Image.asset(
+                              matchC.personAway.value > 1
+                                  ? 'assets/on.png'
+                                  : 'assets/off.png',
+                              width: 35,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
               const SizedBox(
                 height: 25,
               ),
@@ -431,7 +469,7 @@ class MatchPage extends StatelessWidget {
                                     child: Container(
                                       alignment: Alignment.center,
                                       color: Colors.white,
-                                      height: 65,
+                                      height: partai == 2 ? 65 : 100,
                                       child: Text(
                                         matchC.name1.value.toUpperCase(),
                                         style: AppStyleText.styleMonsterat(
@@ -449,7 +487,7 @@ class MatchPage extends StatelessWidget {
                                     child: Container(
                                       alignment: Alignment.center,
                                       color: Colors.grey.shade300,
-                                      height: 65,
+                                      height: partai == 2 ? 65 : 100,
                                       child: Text(
                                         matchC.name3.value.toUpperCase(),
                                         style: AppStyleText.styleMonsterat(
@@ -464,50 +502,51 @@ class MatchPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Expanded(
-                          child: Obx(
-                            () => Row(
-                              children: [
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: () => matchC.fnShowDalogAddNama(
-                                        2, matchC.name2.value),
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      color: Colors.white,
-                                      height: 65,
-                                      child: Text(
-                                        matchC.name2.value.toUpperCase(),
-                                        style: AppStyleText.styleMonsterat(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
+                        if (partai == 2)
+                          Expanded(
+                            child: Obx(
+                              () => Row(
+                                children: [
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () => matchC.fnShowDalogAddNama(
+                                          2, matchC.name2.value),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        color: Colors.white,
+                                        height: 65,
+                                        child: Text(
+                                          matchC.name2.value.toUpperCase(),
+                                          style: AppStyleText.styleMonsterat(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: () => matchC.fnShowDalogAddNama(
-                                        4, matchC.name4.value),
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      color: Colors.grey.shade300,
-                                      height: 65,
-                                      child: Text(
-                                        matchC.name4.value.toUpperCase(),
-                                        style: AppStyleText.styleMonsterat(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () => matchC.fnShowDalogAddNama(
+                                          4, matchC.name4.value),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        color: Colors.grey.shade300,
+                                        height: 65,
+                                        child: Text(
+                                          matchC.name4.value.toUpperCase(),
+                                          style: AppStyleText.styleMonsterat(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
                       ],
                     ),
                   ),
@@ -532,52 +571,54 @@ class MatchPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 130,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: InkWell(
-                        onTap: () => matchC.fnSwitchShuttle(1),
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.amber,
-                          ),
-                          height: 28,
-                          width: 28,
-                          child: Image.asset(
-                            'assets/upswap.png',
-                            width: 25,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 130,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: InkWell(
-                        onTap: () => matchC.fnSwitchShuttle(2),
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.amber,
-                          ),
-                          height: 28,
-                          width: 28,
-                          child: Image.asset(
-                            'assets/upswap.png',
-                            width: 25,
-                            color: Colors.black,
+                  if (partai == 2)
+                    SizedBox(
+                      height: 130,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: InkWell(
+                          onTap: () => matchC.fnSwitchShuttle(1),
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.amber,
+                            ),
+                            height: 28,
+                            width: 28,
+                            child: Image.asset(
+                              'assets/upswap.png',
+                              width: 25,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  )
+                  if (partai == 2)
+                    SizedBox(
+                      height: 130,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: InkWell(
+                          onTap: () => matchC.fnSwitchShuttle(2),
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.amber,
+                            ),
+                            height: 28,
+                            width: 28,
+                            child: Image.asset(
+                              'assets/upswap.png',
+                              width: 25,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                 ],
               ),
               const SizedBox(
@@ -616,7 +657,8 @@ class MatchPage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           primary: Colors.amber,
                         ),
-                        onPressed: () => matchC.fnAddMatchRekap(),
+                        onPressed: () =>
+                            matchC.fnAddMatchRekap(partai!, sistem!),
                         child: Text(
                           'SIMPAN',
                           style: AppStyleText.styleMonsterat(

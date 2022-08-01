@@ -1,3 +1,4 @@
+import 'package:badminton/pages/match_page.dart';
 import 'package:badminton/pages/sistem_page.dart';
 import 'package:badminton/styles/app_style_text.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +25,9 @@ class HomePage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.green,
                     ),
-                    onPressed: () => Get.to(() => const SistemPage(
-                          partai: 0,
+                    onPressed: () => Get.to(() => MatchPage(
+                          partai: 1,
+                          sistem: 2,
                         )),
                     child: Text(
                       'Partai Tunggal',
@@ -44,7 +46,7 @@ class HomePage extends StatelessWidget {
                       primary: Colors.green,
                     ),
                     onPressed: () => Get.to(() => const SistemPage(
-                          partai: 1,
+                          partai: 2,
                         )),
                     child: Text(
                       'Partai Ganda',

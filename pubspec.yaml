@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  better_player: ^0.0.83
   cloud_firestore: ^3.4.2
   cupertino_icons: ^1.0.2
   expandable: ^5.0.1
@@ -38,6 +39,7 @@ dependencies:
   google_fonts: ^3.0.1
   path_provider: ^2.0.11
   shared_preferences: ^2.0.15
+  youtube_player_flutter: ^8.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

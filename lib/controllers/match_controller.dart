@@ -1,10 +1,16 @@
 import 'package:badminton/styles/app_dialog.dart';
 import 'package:badminton/widgets/app_bottomsheet.dart';
+import 'package:better_player/better_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MatchController extends GetxController {
+  BetterPlayerController? betterPlayerController;
+
+  YoutubePlayerController? youtubePlayerController;
+
   var boardName1 = 'TBD'.obs;
   var boardName2 = 'TBD'.obs;
   var boardName3 = 'TBD'.obs;
@@ -31,6 +37,69 @@ class MatchController extends GetxController {
     0,
     0,
   ].obs;
+
+  @override
+  void onInit() {
+    youtubePlayerController = YoutubePlayerController(
+      initialVideoId: 'MtM1yIZ8t3I',
+      flags: const YoutubePlayerFlags(
+        isLive: true,
+        hideThumbnail: true,
+        autoPlay: true,
+        loop: true,
+        enableCaption: false,
+        mute: true,
+        showLiveFullscreenButton: false,
+      ),
+    );
+    betterPlayerController = BetterPlayerController(
+      BetterPlayerConfiguration(
+        aspectRatio: 16 / 9,
+        autoPlay: false,
+        fit: BoxFit.fill,
+        autoDispose: true,
+        looping: true,
+        controlsConfiguration: const BetterPlayerControlsConfiguration(
+          enablePlayPause: true,
+          enablePlaybackSpeed: true,
+          enableProgressBar: true,
+          liveTextColor: Colors.white,
+          showControls: true,
+        ),
+        placeholder: Container(
+          alignment: Alignment.center,
+          width: Get.width,
+          height: 200,
+          color: Colors.amber,
+          child: const Icon(
+            Icons.camera_rounded,
+            size: 125,
+          ),
+        ),
+        showPlaceholderUntilPlay: true,
+      ),
+      betterPlayerDataSource: BetterPlayerDataSource(
+        BetterPlayerDataSourceType.network,
+        "https://firebasestorage.googleapis.com/v0/b/my-indi.appspot.com/o/video%2FVIDEO%20SERUAN%20VAKSIN.mp4?alt=media&token=4605a4dd-0f42-4867-b493-954cbc9869a8",
+        liveStream: true,
+        cacheConfiguration: const BetterPlayerCacheConfiguration(
+          useCache: true,
+        ),
+        placeholder: Container(
+          alignment: Alignment.center,
+          width: Get.width,
+          height: 200,
+          color: Colors.amber,
+          child: const Icon(
+            Icons.camera_rounded,
+            size: 125,
+          ),
+        ),
+      ),
+    );
+    super.onInit();
+  }
+
   var tcName = TextEditingController();
 
   void fnPlusSkor() {
@@ -132,17 +201,28 @@ class MatchController extends GetxController {
     }
   }
 
-  Future<void> fnAddMatchRekap() async {
+  Future<void> fnAddMatchRekap(int partai, int sistem) async {
     Map<String, dynamic> request = {
-      "home": [
-        boardName1.value,
-        boardName2.value,
-      ],
-      "away": [
-        boardName3.value,
-        boardName4.value,
-      ],
-      "kategori": 1,
+      "home": partai == 1
+          ? [
+              boardName1.value,
+            ]
+          : [
+              boardName1.value,
+              boardName2.value,
+            ],
+      "away": partai == 1
+          ? [
+              boardName3.value,
+            ]
+          : [
+              boardName3.value,
+              boardName4.value,
+            ],
+      "partai": partai,
+      "nama_partai": partai == 1 ? "Tunggal" : "Ganda",
+      "sistem": sistem,
+      "nama_sistem": sistem == 1 ? "Reli Point" : "Pindah Bola",
       "score": [
         {
           "set": "Pertama",

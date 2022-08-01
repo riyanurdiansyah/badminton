@@ -26,7 +26,12 @@ class SistemPage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.green,
                     ),
-                    onPressed: () {},
+                    onPressed: () => Get.to(
+                      () => MatchPage(
+                        sistem: 1,
+                        partai: partai,
+                      ),
+                    ),
                     child: Text(
                       'Sistem Reli Point',
                       style: AppStyleText.styleMonsterat(
@@ -44,7 +49,11 @@ class SistemPage extends StatelessWidget {
                       primary: Colors.green,
                     ),
                     onPressed: () => Get.to(
-                      () => MatchPage(),
+                      () => MatchPage(
+                        sistem: 2,
+                        partai: partai,
+                      ),
+                      arguments: "https://youtu.be/h2mYYMW7Ubw",
                     ),
                     child: Text(
                       'Sistem Pindah Bola',
