@@ -41,7 +41,7 @@ class MatchController extends GetxController {
   @override
   void onInit() {
     youtubePlayerController = YoutubePlayerController(
-      initialVideoId: 'MtM1yIZ8t3I',
+      initialVideoId: Get.arguments,
       flags: const YoutubePlayerFlags(
         isLive: true,
         hideThumbnail: true,
@@ -77,24 +77,6 @@ class MatchController extends GetxController {
           ),
         ),
         showPlaceholderUntilPlay: true,
-      ),
-      betterPlayerDataSource: BetterPlayerDataSource(
-        BetterPlayerDataSourceType.network,
-        "https://firebasestorage.googleapis.com/v0/b/my-indi.appspot.com/o/video%2FVIDEO%20SERUAN%20VAKSIN.mp4?alt=media&token=4605a4dd-0f42-4867-b493-954cbc9869a8",
-        liveStream: true,
-        cacheConfiguration: const BetterPlayerCacheConfiguration(
-          useCache: true,
-        ),
-        placeholder: Container(
-          alignment: Alignment.center,
-          width: Get.width,
-          height: 200,
-          color: Colors.amber,
-          child: const Icon(
-            Icons.camera_rounded,
-            size: 125,
-          ),
-        ),
       ),
     );
     super.onInit();
@@ -258,4 +240,6 @@ class MatchController extends GetxController {
       AppDialog.dialogWithRoute('Error', e.toString(), 'Tutup');
     }
   }
+
+  void fnConnectVideo() {}
 }

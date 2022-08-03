@@ -1,5 +1,5 @@
-import 'package:badminton/pages/match_page.dart';
 import 'package:badminton/styles/app_style_text.dart';
+import 'package:badminton/widgets/app_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,12 +26,7 @@ class SistemPage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.green,
                     ),
-                    onPressed: () => Get.to(
-                      () => MatchPage(
-                        sistem: 1,
-                        partai: partai,
-                      ),
-                    ),
+                    onPressed: () => AppBottomSheet.sheetAddVideo(partai!, 1),
                     child: Text(
                       'Sistem Reli Point',
                       style: AppStyleText.styleMonsterat(
@@ -48,13 +43,7 @@ class SistemPage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.green,
                     ),
-                    onPressed: () => Get.to(
-                      () => MatchPage(
-                        sistem: 2,
-                        partai: partai,
-                      ),
-                      arguments: "https://youtu.be/h2mYYMW7Ubw",
-                    ),
+                    onPressed: () => AppBottomSheet.sheetAddVideo(partai!, 2),
                     child: Text(
                       'Sistem Pindah Bola',
                       style: AppStyleText.styleMonsterat(

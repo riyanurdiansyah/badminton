@@ -16,13 +16,13 @@ class SpfController extends GetxController {
 
   String get fnGetUid => prefs.getString('uid') ?? '';
 
-  String get fnGetName => prefs.getString('name') ?? '';
+  String get fnGetName => prefs.getString('username') ?? '';
 
   String get fnGetHp => prefs.getString('handphone') ?? '';
 
   void fnSaveDataToSession(UserModel user) async {
     await prefs.setString('uid', user.uid!);
-    await prefs.setString('name', user.name!);
+    await prefs.setString('username', user.username!);
     await prefs.setString('handphone', user.handphone!);
     await prefs.setString('email', user.email!);
     await prefs.setInt('role', user.role!);

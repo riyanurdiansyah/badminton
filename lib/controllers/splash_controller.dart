@@ -11,7 +11,7 @@ class SplashController extends GetxController {
       if (_spfC.fnGetUid.isNotEmpty) {
         Get.offAllNamed(AppRouteName.home);
       } else {
-        Get.offAllNamed(AppRouteName.home);
+        Get.offAllNamed(AppRouteName.signin);
       }
     });
   }

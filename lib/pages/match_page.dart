@@ -6,7 +6,11 @@ import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MatchPage extends StatelessWidget {
-  MatchPage({Key? key, this.sistem, this.partai}) : super(key: key);
+  MatchPage({
+    Key? key,
+    this.sistem,
+    this.partai,
+  }) : super(key: key);
 
   final int? sistem;
   final int? partai;
@@ -28,9 +32,11 @@ class MatchPage extends StatelessWidget {
                 height: 25,
               ),
               Text(
-                sistem == 2
-                    ? 'Partai Ganda \nSistem Pindah Bola'
-                    : 'Partai Ganda \nSistem Reli Point',
+                partai == 1
+                    ? 'Partai Tunggal \nSistem Reli Point'
+                    : sistem == 2
+                        ? 'Partai Ganda \nSistem Pindah Bola'
+                        : 'Partai Ganda \nSistem Reli Point',
                 style: AppStyleText.styleMonsterat(
                   fontSize: 18,
                   color: Colors.white,

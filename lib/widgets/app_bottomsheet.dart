@@ -1,4 +1,5 @@
 import 'package:badminton/controllers/match_controller.dart';
+import 'package:badminton/pages/match_page.dart';
 import 'package:badminton/styles/app_color.dart';
 import 'package:badminton/validation/app_validator.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +59,85 @@ class AppBottomSheet {
           onPressed: () => matchC.fnAddNamaPemain(slug),
           child: Text(
             'TAMBAH',
+            style: GoogleFonts.aBeeZee(
+              letterSpacing: 5,
+              fontSize: 18,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  static sheetAddVideo(int partai, int sistem) {
+    final txVideo = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+    return Get.defaultDialog(
+      radius: 10,
+      title: 'Live Video',
+      content: Form(
+        key: formKey,
+        child: TextFormField(
+          keyboardType: TextInputType.name,
+          style: GoogleFonts.lato(
+            fontSize: 14,
+          ),
+          decoration: InputDecoration(
+            hintText: 'Koneksikan dengan live video',
+            labelStyle: GoogleFonts.lato(
+              fontSize: 14,
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.red,
+                ),
+                borderRadius: BorderRadius.circular(5)),
+            errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.red,
+                ),
+                borderRadius: BorderRadius.circular(5)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: primaryColor),
+                borderRadius: BorderRadius.circular(5)),
+            enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.black38,
+                ),
+                borderRadius: BorderRadius.circular(5)),
+          ),
+          controller: txVideo,
+          textInputAction: TextInputAction.next,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (value) => AppValidator.requiredField(value!),
+        ),
+      ),
+      confirm: SizedBox(
+        height: 45,
+        width: Get.size.width,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.blue,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(7),
+            ),
+          ),
+          onPressed: () {
+            if (formKey.currentState!.validate()) {
+              Get.back();
+              Get.to(
+                () => MatchPage(
+                  sistem: sistem,
+                  partai: partai,
+                ),
+                arguments: txVideo.text,
+              );
+            }
+          },
+          child: Text(
+            'Connect',
             style: GoogleFonts.aBeeZee(
               letterSpacing: 5,
               fontSize: 18,

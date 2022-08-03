@@ -1,7 +1,9 @@
 import 'package:badminton/bindings/signin_binding.dart';
+import 'package:badminton/bindings/signup_binding.dart';
 import 'package:badminton/bindings/splash_binding.dart';
 import 'package:badminton/pages/home_page.dart';
 import 'package:badminton/pages/signin_page.dart';
+import 'package:badminton/pages/signup_page.dart';
 import 'package:badminton/pages/splash_page.dart';
 import 'package:badminton/routes/app_route_name.dart';
 import 'package:get/get.dart';
@@ -18,6 +20,12 @@ class AppRoute {
       name: AppRouteName.signin,
       page: () => SigninPage(),
       binding: SigninBinding(),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRouteName.signup,
+      page: () => SignupPage(),
+      binding: SignupBinding(),
       transition: Transition.cupertino,
     ),
     GetPage(

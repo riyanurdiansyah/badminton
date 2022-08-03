@@ -1,6 +1,7 @@
-import 'package:badminton/pages/match_page.dart';
+import 'package:badminton/pages/rekap_page.dart';
 import 'package:badminton/pages/sistem_page.dart';
 import 'package:badminton/styles/app_style_text.dart';
+import 'package:badminton/widgets/app_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,10 +26,7 @@ class HomePage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.green,
                     ),
-                    onPressed: () => Get.to(() => MatchPage(
-                          partai: 1,
-                          sistem: 2,
-                        )),
+                    onPressed: () => AppBottomSheet.sheetAddVideo(1, 2),
                     child: Text(
                       'Partai Tunggal',
                       style: AppStyleText.styleMonsterat(
@@ -70,7 +68,9 @@ class HomePage extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   primary: Colors.green,
                 ),
-                onPressed: () {},
+                onPressed: () => Get.to(
+                  () => const RekapPage(),
+                ),
                 child: Text(
                   'View Rekap Pertandingan',
                   style: AppStyleText.styleMonsterat(
