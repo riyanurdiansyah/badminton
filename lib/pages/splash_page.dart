@@ -13,10 +13,10 @@ class SplashPage extends StatelessWidget {
         color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            SizedBox(
+          children: [
+            Image.asset(
+              'assets/logo.jpeg',
               width: 125,
-              child: FlutterLogo(),
             ),
           ],
         ),

@@ -37,7 +37,7 @@ class SigninPage extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: Colors.amber.withOpacity(0.7),
                 ),
-                child: const FlutterLogo(),
+                child: Image.asset('assets/logo.jpeg'),
               ),
               const SizedBox(
                 height: 25,
@@ -73,8 +73,8 @@ class SigninPage extends StatelessWidget {
                         AppLowerCaseTxt(),
                       ],
                       decoration: AppStyleTextfield.authFormInput(
-                        'Email',
-                        'email@hamburin.com',
+                        'Username',
+                        'johndoe',
                         14,
                       ),
                       textInputAction: TextInputAction.next,

@@ -4,7 +4,8 @@ import 'package:better_player/better_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+// import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MatchController extends GetxController {
   BetterPlayerController? betterPlayerController;
@@ -42,14 +43,19 @@ class MatchController extends GetxController {
   void onInit() {
     youtubePlayerController = YoutubePlayerController(
       initialVideoId: Get.arguments,
-      flags: const YoutubePlayerFlags(
-        isLive: true,
-        hideThumbnail: true,
+      params: const YoutubePlayerParams(
+        // hideControls: false,
+        // isLive: true,
+        enableCaption: false,
+        strictRelatedVideos: false,
+        enableJavaScript: true,
+
+        showVideoAnnotations: true,
+        showFullscreenButton: true,
+        useHybridComposition: false,
         autoPlay: true,
         loop: true,
-        enableCaption: false,
         mute: true,
-        showLiveFullscreenButton: false,
       ),
     );
     betterPlayerController = BetterPlayerController(
@@ -77,6 +83,12 @@ class MatchController extends GetxController {
           ),
         ),
         showPlaceholderUntilPlay: true,
+      ),
+    );
+    betterPlayerController!.setupDataSource(
+      BetterPlayerDataSource(
+        BetterPlayerDataSourceType.network,
+        Get.arguments,
       ),
     );
     super.onInit();

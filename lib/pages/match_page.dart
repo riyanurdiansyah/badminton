@@ -3,7 +3,8 @@ import 'package:badminton/styles/app_style_text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+// import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MatchPage extends StatelessWidget {
   MatchPage({
@@ -375,24 +376,10 @@ class MatchPage extends StatelessWidget {
                           Container(
                             alignment: Alignment.center,
                             width: Get.width,
-                            height: 200,
-                            color: Colors.amber,
-                            child: YoutubePlayer(
-                              onEnded: ((metaData) {}),
-                              onReady: () {
-                                const SizedBox();
-                              },
-                              topActions: [
-                                Container(
-                                  color: Colors.red,
-                                  height: 50,
-                                )
-                              ],
+                            color: Colors.grey.shade300,
+                            child: YoutubePlayerIFrame(
+                              aspectRatio: 16 / 9,
                               controller: matchC.youtubePlayerController!,
-                              liveUIColor: Colors.amber,
-                              showVideoProgressIndicator: false,
-                              thumbnail: null,
-                              bufferIndicator: null,
                             ),
                             // BetterPlayer(
                             //   controller: matchC.betterPlayerController!,
